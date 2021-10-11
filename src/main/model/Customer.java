@@ -38,6 +38,7 @@ public class Customer {
             return false;
         }
     }
+
     //REQUIRES: Money must be > 0
     //MODIFIES: this
     //EFFECT: balance will update money, create a transaction object and add it to the list of transaction.
@@ -79,11 +80,11 @@ public class Customer {
     //EFFECT: Remove transaction from the list of transaction if the transaction price and type match
     // with the amount and type in the parameter, else return False
     public boolean cancelTransaction(String name, double amount, String type) {
-        for (Transaction transaction: transactions) {
+        for (Transaction transaction : transactions) {
             if (transaction.getPrice() == amount && transaction.getType().equals(type)
-            && transaction.getName().equals(name)) {
-                    transactions.remove(transaction);
-                    return true;
+                    && transaction.getName().equals(name)) {
+                transactions.remove(transaction);
+                return true;
             }
         }
         return false;

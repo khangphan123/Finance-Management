@@ -6,8 +6,7 @@ public class Transaction {
     private String type;
 
 
-
-    public Transaction(String name,double price, String type) {
+    public Transaction(String name, double price, String type) {
         this.name = name;
         this.price = price;
         this.type = type;
