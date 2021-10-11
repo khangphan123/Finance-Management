@@ -69,6 +69,7 @@ public class testCustomer {
         Khang.makePurchase(transaction4);
         Khang.cancelTransaction("Buy a car", 50000, "Consumption");
         assertFalse(Khang.containTransaction(transaction1));
+        assertEquals(Khang.getBalance(), 99800);
         assertFalse(Khang.cancelTransaction("Buy a candy", 1, "Consumption"));
 
 

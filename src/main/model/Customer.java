@@ -78,12 +78,14 @@ public class Customer {
     //REQUIRE:transaction must be valid transaction, amount and type must also be valid
     //MODIFIES: this
     //EFFECT: Remove transaction from the list of transaction if the transaction price and type match
-    // with the amount and type in the parameter, else return False
+    // with the amount and type in the parameter. Add to current balance the amount that just
+    // got refund. Else return False
     public boolean cancelTransaction(String name, double amount, String type) {
         for (Transaction transaction : transactions) {
             if (transaction.getPrice() == amount && transaction.getType().equals(type)
                     && transaction.getName().equals(name)) {
                 transactions.remove(transaction);
+                this.balance += amount;
                 return true;
             }
         }
