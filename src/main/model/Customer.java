@@ -10,12 +10,17 @@ public class Customer {
     private String name;
     private List<Transaction> transactions;
     private int accountNumber;
+    private double interestRate;
+    private List<Stock> stockPortfolios;
+
 
     public Customer(String name, int accountNumber, double initialBalance) {
         this.name = name;
         this.accountNumber = accountNumber;
         this.balance = initialBalance;
         this.transactions = new ArrayList<>();
+        this.interestRate = 0.05;
+        this.stockPortfolios = new ArrayList<>();
     }
 
     public String getName() {
@@ -30,9 +35,22 @@ public class Customer {
         return this.accountNumber;
     }
 
+    public List<Transaction> getTransaction() {
+        return this.transactions;
+    }
+
     //EFFECT: Return True if there is this transaction in the list of transaction, else return False
     public boolean containTransaction(Transaction transaction) {
         if (transactions.contains(transaction)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //EFFECT: Return true if there is this stock in the portfolios, else return false.
+    public boolean containStock(Stock stock) {
+        if (stockPortfolios.contains(stock)) {
             return true;
         } else {
             return false;
@@ -91,6 +109,41 @@ public class Customer {
         }
         return false;
     }
+
+    // REQUIRE: Year > 0.
+    // EFFECT: return the money that the user could gain if they invest with the current interest rate
+    public double investMoney(int year) {
+        double investedMoney = 0;
+        investedMoney = this.balance * (Math.pow(1 + (this.interestRate / 1), (1 * year)));
+        return investedMoney;
+    }
+
+    // REQUIRE: valid stock
+    // MODIFIES: this
+    // EFFECT: add the Stock into the stock Portfolios if there is enough balance,else return false;
+    public boolean buyStock(Stock stock) {
+        if (this.balance >= stock.getPrice()) {
+            this.balance -= stock.getPrice();
+            this.stockPortfolios.add(stock);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean sellStock(Stock stock) {
+        for (Stock someStock : stockPortfolios) {
+            if (someStock.equals(stock) && someStock.getAbbreviation() == stock.getAbbreviation()
+            && someStock.getRate() == stock.getRate() && someStock.getRate() == stock.getRate()) {
+                stockPortfolios.remove(someStock);
+                this.balance += stock.getPrice();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //
     //EFFECT: Print out the profile
 //    public void printProfile() {
 //        System.out.println("Name: " + this.name + "\n" + "Balance: ");
@@ -98,13 +151,6 @@ public class Customer {
 //    }
 
 
-    // EFFECT: PRINT OUT ALL THE TRANSACTION WITH ITS CORRESPONDING PRICE ON TO THE SCREEN.
-//    public void printTransactions() {
-//        for (Transaction transaction: transactions) {
-//            System.out.println("Transaction: " + transaction.getName() + " Amount: " + transaction.getPrice()
-//            + " Type: " + transaction.getType());
-//        }
-//
-//    }
+
 
 }

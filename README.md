@@ -17,4 +17,4 @@ I believe that this app will make mine and many other people's lives a lot easie
     * As a user, I want to be able to withdraw money from my account.  
     * AS a user, I want to view all of the transactions that I have made in the past.
     * As a user, I want to be able to cancel a transaction and get a refund.  
-
+    * As a user, I want to be able to invest my money and gain more money with interest rate
