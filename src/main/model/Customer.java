@@ -134,7 +134,7 @@ public class Customer {
     public boolean sellStock(Stock stock) {
         for (Stock someStock : stockPortfolios) {
             if (someStock.equals(stock) && someStock.getAbbreviation() == stock.getAbbreviation()
-            && someStock.getRate() == stock.getRate() && someStock.getRate() == stock.getRate()) {
+                    && someStock.getRate() == stock.getRate() && someStock.getRate() == stock.getRate()) {
                 stockPortfolios.remove(someStock);
                 this.balance += stock.getPrice();
                 return true;
@@ -149,8 +149,6 @@ public class Customer {
 //        System.out.println("Name: " + this.name + "\n" + "Balance: ");
 //
 //    }
-
-
 
 
 }

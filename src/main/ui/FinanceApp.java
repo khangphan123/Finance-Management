@@ -171,8 +171,6 @@ public class FinanceApp {
         printTransactions(customerAccount);
 
 
-
-
     }
 
     private Customer logInAccount() {

@@ -89,7 +89,7 @@ public class TestCustomer {
 
     @Test
     public void testInvestMoney() {
-        assertEquals(Khang.investMoney(1),105000) ;
+        assertEquals(Khang.investMoney(1), 105000);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class TestCustomer {
         assertTrue(Khang.buyStock(Tesla));
         Khang.buyStock(Tesla);
         Khang.buyStock(Google);
-        assertEquals(Khang.getBalance(),95627.89);
+        assertEquals(Khang.getBalance(), 95627.89);
         assertTrue(Khang.containStock(Tesla));
         assertTrue(Khang.containStock(Google));
         assertFalse(Khang.containStock(Facebook));
