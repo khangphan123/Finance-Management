@@ -13,12 +13,12 @@ I believe that this app will make mine and many other people's lives a lot easie
     
     * As a user, I want to be able to have a profile and display it.
     * As a user, I want to be able to add money to my account.
-    * As a user, I want to be able to a purchase and have this transaction stored.
+    * As a user, I want to be able to make a purchase and have this transaction stored.
     * As a user, I want to be able to withdraw money from my account.  
     * As a user, I want to view all of the transactions that I have made in the past.
     * As a user, I want to be able to cancel a transaction and get a refund.
     * As a user, I want to be able to invest my money and gain more money with interest rate.
-    * As a user, I want to be able to buy stock.
-    * As a user, I want to be able to sell stock.
+    * As a user, I want to be able to buy stock and add this to my portfolios.
+    * As a user, I want to be able to sell stock and remove this from my portfolios.
     * As a user, I want to see the portfolios of stock that I have bought
     

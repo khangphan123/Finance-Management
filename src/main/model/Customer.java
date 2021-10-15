@@ -141,7 +141,8 @@ public class Customer {
     // if stock is in the stock portfolios and return true. Return false otherwise
     public boolean sellStock(Stock stock) {
         for (Stock someStock : stockPortfolios) {
-            if (someStock.equals(stock) && someStock.getName() == stock.getName() && someStock.getAbbreviation() == stock.getAbbreviation()
+            if (someStock.equals(stock) && someStock.getName() == stock.getName()
+                    && someStock.getAbbreviation() == stock.getAbbreviation()
                     && someStock.getRate() == stock.getRate() && someStock.getRate() == stock.getRate()) {
                 stockPortfolios.remove(someStock);
                 this.balance += stock.getPrice();
