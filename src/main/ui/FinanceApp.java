@@ -212,6 +212,7 @@ public class FinanceApp {
         printTransactions(customerAccount);
     }
 
+    //MODIFIES: this
     //EFFECT: Prompt the user for the stock they want to buy and then proceed to buy it.
     private void doBuyStock() {
         Customer customerAccount = logInAccount();
@@ -233,6 +234,10 @@ public class FinanceApp {
         printStockPortfolios(customerAccount);
     }
 
+    //MODIFIES: this
+    //EFFECTS: Prompt users for the stock they want to sell and if the stock exists in
+    // the list of stock then remove it from the list and add the stock price to the account's
+    // balance
     private void doSellStock() {
         Customer customerAccount = logInAccount();
         String stockName = "";
@@ -290,6 +295,7 @@ public class FinanceApp {
 
     }
 
+    // EFFECTS: Print out the stock with its corresponding prices and abbreviation.
     public void printStockPortfolios(Customer customer) {
         if (customer.getStockPortfolios().size() == 0) {
             System.out.println("Empty stock portfolios");
