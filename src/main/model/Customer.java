@@ -39,6 +39,10 @@ public class Customer {
         return this.transactions;
     }
 
+    public List<Stock> getStockPortfolios() {
+        return this.stockPortfolios;
+    }
+
     //EFFECT: Return True if there is this transaction in the list of transaction, else return False
     public boolean containTransaction(Transaction transaction) {
         if (transactions.contains(transaction)) {
@@ -131,9 +135,13 @@ public class Customer {
         }
     }
 
+    //REQUIRES: Valid stock
+    //MODIFIES: this
+    //EFFECTS: Remove stock from the stock portfolios and decrease balance by the stock amount
+    // if stock is in the stock portfolios and return true. Return false otherwise
     public boolean sellStock(Stock stock) {
         for (Stock someStock : stockPortfolios) {
-            if (someStock.equals(stock) && someStock.getAbbreviation() == stock.getAbbreviation()
+            if (someStock.equals(stock) && someStock.getName() == stock.getName() && someStock.getAbbreviation() == stock.getAbbreviation()
                     && someStock.getRate() == stock.getRate() && someStock.getRate() == stock.getRate()) {
                 stockPortfolios.remove(someStock);
                 this.balance += stock.getPrice();
@@ -142,13 +150,5 @@ public class Customer {
         }
         return false;
     }
-
-    //
-    //EFFECT: Print out the profile
-//    public void printProfile() {
-//        System.out.println("Name: " + this.name + "\n" + "Balance: ");
-//
-//    }
-
 
 }

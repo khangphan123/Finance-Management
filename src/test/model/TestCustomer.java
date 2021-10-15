@@ -39,6 +39,7 @@ public class TestCustomer {
         assertFalse(Khang.getAccountNumber() == 321331232);
         assertTrue(Khang.getBalance() == 100000);
         assertFalse(Khang.getTransaction() == null);
+        assertFalse(Khang.getStockPortfolios() == null);
     }
 
     @Test
