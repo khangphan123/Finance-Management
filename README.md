@@ -21,4 +21,6 @@ I believe that this app will make mine and many other people's lives a lot easie
     * As a user, I want to be able to buy stock and add this to my portfolios.
     * As a user, I want to be able to sell stock and remove this from my portfolios.
     * As a user, I want to see the portfolios of stock that I have bought
+    * As a user, I want to be able to save all the amount of money, transactions, stocks that I have in my account to a file
+    * As a user, I want to be able to be able to load my money, transactions, stocks from a file when I restart my application.
     

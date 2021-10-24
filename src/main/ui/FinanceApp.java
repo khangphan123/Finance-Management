@@ -6,30 +6,31 @@ import model.Transaction;
 
 import static org.omg.CORBA.ORB.init;
 
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
+
+// EFFECTS: construct Finance app
 public class FinanceApp {
+    private static final String JSON_STORE = "./data/Finance.json";
     private Customer khang;
     private Customer john;
-    private Transaction transaction1;
-    private Transaction transaction2;
-    private Transaction transaction3;
-    private Transaction transaction4;
-    private Stock google;
-    private Stock facebook;
-    private Stock amazon;
-    private Stock tesla;
-    private Stock apple;
     private List<Customer> customerList;
     private List<Transaction> availableTransaction;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private List<Stock> stockList;
     private Scanner input;
 
     // Note: The code in runFinance(), processCommand(), displayMenu is taken
-    // from the
+    // from the file in the course
     // EFFECTS: run the finance application
     public FinanceApp() {
         runFinance();
@@ -60,6 +61,8 @@ public class FinanceApp {
     private void processCommand(String command) {
         if (command.equals("d")) {
             doDeposit();
+        } else if (command.equals("s")) {
+            doSignup();
         } else if (command.equals("w")) {
             doWithdrawal();
         } else if (command.equals("m")) {
@@ -70,7 +73,12 @@ public class FinanceApp {
             doBuyStock();
         } else if (command.equals("st")) {
             doSellStock();
-
+        } else if (command.equals("si")) {
+            gainFromPortfolios();
+        } else if (command.equals("sf")) {
+            saveCustomer();
+        } else if (command.equals("l")) {
+            loadCustomer();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -78,33 +86,16 @@ public class FinanceApp {
 
     // EFFECT: Initialize the necessary objects needed for the program to function
     // properly
-    @SuppressWarnings("methodlength")
+
     private void init() {
         khang = new Customer("Khang", 1310, 5000);
         john = new Customer("John", 123, 1000);
-        transaction1 = new Transaction("car", 5000, "consumption");
-        transaction2 = new Transaction("shoes", 100, "consumption");
-        transaction3 = new Transaction("rocket", 99999999, "consumption");
-        transaction4 = new Transaction("car ticket", 100, "fine");
-        tesla = new Stock("Tesla", "TSLA", 810.47, 0.02);
-        amazon = new Stock("Amazon", "AMZN", 3282.88, 0.018);
-        apple = new Stock("Apple", "AAPL", 40.51, -0.01);
-        google = new Stock("Google", "GOOGL", 2751.17, 0.008);
-        facebook = new Stock("Facebook", "FB", 324.72, 0.002);
         stockList = new ArrayList<>();
-        stockList.add(tesla);
-        stockList.add(amazon);
-        stockList.add(apple);
-        stockList.add(google);
-        stockList.add(facebook);
-        availableTransaction = new ArrayList<>();
-        availableTransaction.add(transaction1);
-        availableTransaction.add(transaction2);
-        availableTransaction.add(transaction3);
-        availableTransaction.add(transaction4);
         customerList = new ArrayList<>();
         customerList.add(khang);
         customerList.add(john);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -112,12 +103,35 @@ public class FinanceApp {
     //EFFECT: Display a menu so that users can chooses which option they want to use
     private void displayMenu() {
         System.out.println("\nSelect from:");
+        System.out.println("\ts -> sign up");
         System.out.println("\td -> deposit");
         System.out.println("\tw -> withdraw");
         System.out.println("\tm -> make purchase");
         System.out.println("\tc -> cancel purchase");
         System.out.println("\tbs -> buy stock");
         System.out.println("\tst -> sell stock");
+        System.out.println("\tsi -> see investment");
+        System.out.println("\tsf -> save customer to file");
+        System.out.println("\tl -> load customer from file");
+        System.out.println("\te -> exit");
+
+    }
+
+    //MODIFIES: this
+    //EFFECTS: Prompt the user to sign up for an account
+    private void doSignup() {
+        String name = "";
+        int accountNumber = 0;
+        double initialBalance = 0;
+        System.out.println("What is your name: ");
+        name = input.next();
+        System.out.println("What is your account number: ");
+        accountNumber = input.nextInt();
+        System.out.println(("What is your initial Balance: "));
+        initialBalance = input.nextDouble();
+        Customer newCustomer = new Customer(name, accountNumber, initialBalance);
+        customerList.add(newCustomer);
+        System.out.println("Sign up successfully");
 
     }
 
@@ -166,18 +180,32 @@ public class FinanceApp {
     private void doMakePurchase() {
         Customer customerAccount = logInAccount();
         String itemName = "";
+        double itemPrice = 0;
+        String itemType = "";
         System.out.println("What do you want to purchase: ");
         itemName = input.next();
-        for (Transaction transaction : availableTransaction) {
-            if (itemName.equals(transaction.getName())) {
-                if (transaction.getPrice() > customerAccount.getBalance()) {
-                    System.out.println("Not enough money to purchase this item");
-                } else {
-                    customerAccount.makePurchase(transaction);
-                }
-
-            }
+        itemName = itemName.toLowerCase();
+        System.out.println("What is the price of the item: ");
+        itemPrice = input.nextDouble();
+        System.out.println("What is the type of the item: ");
+        itemType = input.next();
+        itemType = itemType.toLowerCase();
+        Transaction newPurchase = new Transaction(itemName, itemPrice, itemType);
+        if (customerAccount.getBalance() < itemPrice) {
+            System.out.println("Not enough money to purchase this item");
+        } else {
+            customerAccount.makePurchase(newPurchase);
         }
+//        for (Transaction transaction : availableTransaction) {
+//            if (itemName.equals(transaction.getName())) {
+//                if (transaction.getPrice() > customerAccount.getBalance()) {
+//                    System.out.println("Not enough money to purchase this item");
+//                } else {
+//                    customerAccount.makePurchase(transaction);
+//                }
+//
+//            }
+//        }
 
 
         System.out.println("Account balance: " + customerAccount.getBalance());
@@ -217,19 +245,36 @@ public class FinanceApp {
     private void doBuyStock() {
         Customer customerAccount = logInAccount();
         String stockName = "";
+        String stockAbbreviation = "";
+        double price = 0;
+        double rate = 0;
         System.out.println("What stock do you want to buy: ");
         stockName = input.next();
-        for (Stock stock : stockList) {
-            if (stockName.equals(stock.getName())) {
-                if (stock.getPrice() > customerAccount.getBalance()) {
-                    System.out.println("Not enough money to purchase this stock");
-                } else {
-                    customerAccount.buyStock(stock);
-                }
-
-            }
-
+        stockName = stockName.toLowerCase();
+        System.out.println("What is the abbreviation of the stock: ");
+        stockAbbreviation = input.next();
+        System.out.println("What is the price of the stock: ");
+        price = input.nextDouble();
+        System.out.println("what is the current rate of the stock: ");
+        rate = input.nextDouble();
+        Stock newStock = new Stock(stockName, stockAbbreviation, price, rate);
+        if (price > customerAccount.getBalance()) {
+            System.out.println("Don't have enough money");
+        } else {
+            customerAccount.buyStock(newStock);
+            stockList.add(newStock);
         }
+//        for (Stock stock : stockList) {
+//            if (stockName.equals(stock.getName())) {
+//                if (stock.getPrice() > customerAccount.getBalance()) {
+//                    System.out.println("Not enough money to purchase this stock");
+//                } else {
+//                    customerAccount.buyStock(stock);
+//                }
+//
+//            }
+//
+//        }
         System.out.println("Account balance: " + customerAccount.getBalance());
         printStockPortfolios(customerAccount);
     }
@@ -261,6 +306,15 @@ public class FinanceApp {
 
     }
 
+    private void gainFromPortfolios() {
+        Customer customerAccount = logInAccount();
+        int year = 0;
+        System.out.println("How many years do you want to invest: ");
+        year = input.nextInt();
+        System.out.println("Total money gained after " + year + " years will be " + customerAccount.moneyGainedFromPortfolio(year));
+
+    }
+
 
     //EFFECT: Prompt user for their account number and if the account number matches
     // with an existent account that has been initialized then proceed.
@@ -283,6 +337,7 @@ public class FinanceApp {
         return null;
     }
 
+
     // EFFECT: PRINT OUT ALL THE TRANSACTION WITH ITS CORRESPONDING PRICE ON TO THE SCREEN.
     public void printTransactions(Customer customer) {
         if (customer.getTransaction().size() == 0) {
@@ -304,6 +359,28 @@ public class FinanceApp {
         for (Stock stock : customer.getStockPortfolios()) {
             System.out.println("Stock: " + stock.getName() + "(" + stock.getAbbreviation()
                     + ") " + "Price: " + stock.getPrice());
+        }
+    }
+
+    private void saveCustomer() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(khang);
+            jsonWriter.close();
+            System.out.println("Saved " + khang.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads customer from file
+    private void loadCustomer() {
+        try {
+            khang = jsonReader.read();
+            System.out.println("Loaded " + khang.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

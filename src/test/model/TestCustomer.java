@@ -125,4 +125,11 @@ public class TestCustomer {
         assertEquals(Khang.getBalance(), 100000);
 
     }
+
+    @Test
+    public void testMoneyGainedFromStock() {
+        Khang.buyStock(Tesla);
+        Khang.buyStock(Google);
+        assertEquals(Khang.moneyGainedFromPortfolio(1),  3599.86, 0.01);
+    }
 }

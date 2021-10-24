@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Customer {
+public class Customer implements Writeable {
     private double balance;
     private String name;
     private List<Transaction> transactions;
@@ -150,6 +154,52 @@ public class Customer {
             }
         }
         return false;
+    }
+
+
+    //REQUIRES: valid year
+    //EFFECTS: Return the amount of money gained from investing in stock after nth years.
+    public double moneyGainedFromPortfolio(int year) {
+        double totalAmount = 0;
+        double amountInvestAfterYears = 0;
+        for (Stock stock: stockPortfolios) {
+            totalAmount += stock.getPrice() + stock.getPrice() * stock.getRate();
+        }
+        amountInvestAfterYears = totalAmount * year;
+        return amountInvestAfterYears;
+    }
+
+
+    //EFFECTS:
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("balance", balance);
+        json.put("account number", accountNumber);
+        json.put("interest rate", interestRate);
+        json.put("transactions", transactionsToJson());
+        json.put("stocks", stockPortfoliosToJson());
+        return json;
+    }
+
+    private JSONArray transactionsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Transaction transaction: transactions) {
+            jsonArray.put(transaction.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    private JSONArray stockPortfoliosToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Stock stock: stockPortfolios) {
+            jsonArray.put(stock.toJson());
+        }
+        return jsonArray;
     }
 
 }

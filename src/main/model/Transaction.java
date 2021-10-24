@@ -1,6 +1,9 @@
 package model;
 
-public class Transaction {
+import org.json.JSONObject;
+import persistence.Writeable;
+
+public class Transaction implements Writeable {
     private String name;
     private double price;
     private String type;
@@ -23,5 +26,14 @@ public class Transaction {
 
     public String getType() {
         return this.type;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("price", price);
+        json.put("type", type);
+        return json;
     }
 }

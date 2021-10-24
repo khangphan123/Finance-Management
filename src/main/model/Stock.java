@@ -1,6 +1,9 @@
 package model;
 
-public class Stock {
+import persistence.Writeable;
+import org.json.JSONObject;
+
+public class Stock implements Writeable {
     private String name;
     private String abbreviation;
     private double price;
@@ -29,4 +32,13 @@ public class Stock {
         return this.rate;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("abbreviation", abbreviation);
+        json.put("price", price);
+        json.put("rate", rate);
+        return json;
+    }
 }
