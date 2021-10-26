@@ -10,21 +10,24 @@ import model.Customer;
 import model.Stock;
 import model.Transaction;
 import org.json.*;
-// Reads Customer from JSON stored in file
-
+// This class is reads Customer from JSON stored in file
+//Note: I replicate this code from "JsonSerializationDemo" that is provided.
 public class JsonReader {
     private String source;
-
+    //EFFECTS: The constructor is used to read from the source file
     public JsonReader(String source) {
         this.source = source;
     }
 
+    //EFFECTS: Reads customer from file and then parse it then return it.
+    //throws exception if no files or wrong files are found
     public Customer read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseCustomer(jsonObject);
     }
 
+    //EFFECTS: Read source file as string then return it.
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -34,6 +37,9 @@ public class JsonReader {
 
         return contentBuilder.toString();
     }
+
+    //EFFECTS: Parse the customer to get their name, balance, accountNumber and then add transactions
+    // and stocks, then return the customer
 
     private Customer parseCustomer(JSONObject jsonObject) {
         String name = jsonObject.getString("name");

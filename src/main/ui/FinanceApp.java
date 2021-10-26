@@ -317,7 +317,8 @@ public class FinanceApp {
         int year = 0;
         System.out.println("How many years do you want to invest: ");
         year = input.nextInt();
-        System.out.println("Total money gained after " + year + " years will be " + khang.moneyGainedFromPortfolio(year));
+        System.out.println("Total money gained after " + year + " years will be "
+                + khang.moneyGainedFromPortfolio(year));
 
     }
 
