@@ -22,6 +22,7 @@ public class JsonWriter {
     // MODIFIES: this
     // EFFECTS: opens writer
     // throws FileNotFoundException if no file is found.
+
     public void open() throws FileNotFoundException {
         writer = new PrintWriter(new File(destination));
     }
@@ -34,6 +35,7 @@ public class JsonWriter {
     }
     // MODIFIES: this
     // EFFECTS: closes writer
+
     public void close() {
         writer.close();
     }

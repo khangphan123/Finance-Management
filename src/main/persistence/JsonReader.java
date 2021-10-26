@@ -12,9 +12,11 @@ import model.Transaction;
 import org.json.*;
 // This class is reads Customer from JSON stored in file
 //Note: I replicate this code from "JsonSerializationDemo" that is provided.
+
 public class JsonReader {
     private String source;
     //EFFECTS: The constructor is used to read from the source file
+
     public JsonReader(String source) {
         this.source = source;
     }
