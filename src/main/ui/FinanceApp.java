@@ -32,10 +32,15 @@ public class FinanceApp {
     // Note: The code in runFinance(), processCommand(), displayMenu is taken
     // from the file in the course
     // EFFECTS: run the finance application
-    public FinanceApp() {
+    public FinanceApp() throws FileNotFoundException {
+        khang = new Customer("Khang", 1310, 5000);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runFinance();
+
     }
 
+    //EFFECTS: run the app and prompt users for command.
     private void runFinance() {
         boolean running = true;
         String command = null;
@@ -58,11 +63,10 @@ public class FinanceApp {
     // REQUIRES: command
     // EFFECT: process the command from users and proceed to perfom the necessary
     // function.
+
     private void processCommand(String command) {
         if (command.equals("d")) {
             doDeposit();
-        } else if (command.equals("s")) {
-            doSignup();
         } else if (command.equals("w")) {
             doWithdrawal();
         } else if (command.equals("m")) {
@@ -75,6 +79,8 @@ public class FinanceApp {
             doSellStock();
         } else if (command.equals("si")) {
             gainFromPortfolios();
+        } else if (command.equals("pp")) {
+            printProfile();
         } else if (command.equals("sf")) {
             saveCustomer();
         } else if (command.equals("l")) {
@@ -88,14 +94,12 @@ public class FinanceApp {
     // properly
 
     private void init() {
-        khang = new Customer("Khang", 1310, 5000);
         john = new Customer("John", 123, 1000);
         stockList = new ArrayList<>();
         customerList = new ArrayList<>();
         customerList.add(khang);
         customerList.add(john);
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
+
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -103,13 +107,13 @@ public class FinanceApp {
     //EFFECT: Display a menu so that users can chooses which option they want to use
     private void displayMenu() {
         System.out.println("\nSelect from:");
-        System.out.println("\ts -> sign up");
         System.out.println("\td -> deposit");
         System.out.println("\tw -> withdraw");
         System.out.println("\tm -> make purchase");
         System.out.println("\tc -> cancel purchase");
         System.out.println("\tbs -> buy stock");
         System.out.println("\tst -> sell stock");
+        System.out.println("\tpp -> print profile");
         System.out.println("\tsi -> see investment");
         System.out.println("\tsf -> save customer to file");
         System.out.println("\tl -> load customer from file");
@@ -139,38 +143,38 @@ public class FinanceApp {
     //EFFECTS: Prompt the user on how much they to deposit and add that money
     //to the account balance
     private void doDeposit() {
-        Customer customerAccount = logInAccount();
+//        Customer customerAccount = logInAccount();
         System.out.print("How much do you want to deposit: ");
         double amount = input.nextDouble();
 
         if (amount >= 0) {
-            customerAccount.deposit(amount);
+            khang.deposit(amount);
         } else {
             System.out.println("Invalid amount");
         }
 
-        System.out.println("Account balance: " + customerAccount.getBalance());
-        printTransactions(customerAccount);
+        System.out.println("Account balance: " + khang.getBalance());
+        printTransactions(khang);
     }
 
     //     MODIFIES: this
 //     EFFECTS: Prompt user on how much they want to withdraw money and then
     // subtract that money from the money account.
     private void doWithdrawal() {
-        Customer customerAccount = logInAccount();
+//        Customer customerAccount = logInAccount();
         System.out.print("How much do you want to withdraw: ");
         double amount = input.nextDouble();
 
         if (amount < 0) {
             System.out.println("Invalid amount");
-        } else if (customerAccount.getBalance() < amount) {
+        } else if (khang.getBalance() < amount) {
             System.out.println("Not enough money");
         } else {
-            customerAccount.withDraw(amount);
+            khang.withDraw(amount);
         }
 
-        System.out.println("Account balance: " + customerAccount.getBalance());
-        printTransactions(customerAccount);
+        System.out.println("Account balance: " + khang.getBalance());
+        printTransactions(khang);
 
     }
 
@@ -178,7 +182,7 @@ public class FinanceApp {
     // EFFECTS: Prompt the users for item they want to purchase and then if found
     // the item in the list of available then subtract the item's price from the account
     private void doMakePurchase() {
-        Customer customerAccount = logInAccount();
+//        Customer customerAccount = logInAccount();
         String itemName = "";
         double itemPrice = 0;
         String itemType = "";
@@ -191,10 +195,10 @@ public class FinanceApp {
         itemType = input.next();
         itemType = itemType.toLowerCase();
         Transaction newPurchase = new Transaction(itemName, itemPrice, itemType);
-        if (customerAccount.getBalance() < itemPrice) {
+        if (khang.getBalance() < itemPrice) {
             System.out.println("Not enough money to purchase this item");
         } else {
-            customerAccount.makePurchase(newPurchase);
+            khang.makePurchase(newPurchase);
         }
 //        for (Transaction transaction : availableTransaction) {
 //            if (itemName.equals(transaction.getName())) {
@@ -208,8 +212,8 @@ public class FinanceApp {
 //        }
 
 
-        System.out.println("Account balance: " + customerAccount.getBalance());
-        printTransactions(customerAccount);
+        System.out.println("Account balance: " + khang.getBalance());
+        printTransactions(khang);
 
     }
 
@@ -217,7 +221,7 @@ public class FinanceApp {
     // and then cancel that purchase and then add that item's price to the customer's
     //balance.
     private void doCancelPurchase() {
-        Customer customerAccount = logInAccount();
+//        Customer customerAccount = logInAccount();
         String itemName = "";
         double itemPrice = 0;
         String itemType = "";
@@ -230,20 +234,20 @@ public class FinanceApp {
         System.out.print("Item type: ");
         itemType = input.next();
         itemType = itemType.toLowerCase();
-        boolean status = customerAccount.cancelTransaction(itemName, itemPrice, itemType);
+        boolean status = khang.cancelTransaction(itemName, itemPrice, itemType);
         if (status) {
             System.out.println("Cancel successfully");
-            System.out.println("Account balance: " + customerAccount.getBalance());
+            System.out.println("Account balance: " + khang.getBalance());
         } else {
             System.out.println("Item does not exists");
         }
-        printTransactions(customerAccount);
+        printTransactions(khang);
     }
 
     //MODIFIES: this
     //EFFECT: Prompt the user for the stock they want to buy and then proceed to buy it.
     private void doBuyStock() {
-        Customer customerAccount = logInAccount();
+//        Customer customerAccount = logInAccount();
         String stockName = "";
         String stockAbbreviation = "";
         double price = 0;
@@ -258,10 +262,10 @@ public class FinanceApp {
         System.out.println("what is the current rate of the stock: ");
         rate = input.nextDouble();
         Stock newStock = new Stock(stockName, stockAbbreviation, price, rate);
-        if (price > customerAccount.getBalance()) {
+        if (price > khang.getBalance()) {
             System.out.println("Don't have enough money");
         } else {
-            customerAccount.buyStock(newStock);
+            khang.buyStock(newStock);
             stockList.add(newStock);
         }
 //        for (Stock stock : stockList) {
@@ -275,8 +279,8 @@ public class FinanceApp {
 //            }
 //
 //        }
-        System.out.println("Account balance: " + customerAccount.getBalance());
-        printStockPortfolios(customerAccount);
+        System.out.println("Account balance: " + khang.getBalance());
+        printStockPortfolios(khang);
     }
 
     //MODIFIES: this
@@ -284,7 +288,7 @@ public class FinanceApp {
     // the list of stock then remove it from the list and add the stock price to the account's
     // balance
     private void doSellStock() {
-        Customer customerAccount = logInAccount();
+//        Customer customerAccount = logInAccount();
         String stockName = "";
         Stock stockToSell = null;
         System.out.println("what stock do you want to sell: ");
@@ -294,24 +298,26 @@ public class FinanceApp {
                 stockToSell = stock;
             }
         }
-        boolean status = customerAccount.sellStock(stockToSell);
+        boolean status = khang.sellStock(stockToSell);
         if (status) {
             System.out.println("Stock sold successfully");
         } else {
             System.out.println("Stock does not exists");
         }
 
-        System.out.println("Account balance: " + customerAccount.getBalance());
-        printStockPortfolios(customerAccount);
+        System.out.println("Account balance: " + khang.getBalance());
+        printStockPortfolios(khang);
 
     }
 
+    //EFFECTS: Prompt users for the number of years they want to invest with their current stock portfolios, then
+    // calculate the gain from those stocks.
     private void gainFromPortfolios() {
-        Customer customerAccount = logInAccount();
+//        Customer customerAccount = logInAccount();
         int year = 0;
         System.out.println("How many years do you want to invest: ");
         year = input.nextInt();
-        System.out.println("Total money gained after " + year + " years will be " + customerAccount.moneyGainedFromPortfolio(year));
+        System.out.println("Total money gained after " + year + " years will be " + khang.moneyGainedFromPortfolio(year));
 
     }
 
@@ -360,6 +366,13 @@ public class FinanceApp {
             System.out.println("Stock: " + stock.getName() + "(" + stock.getAbbreviation()
                     + ") " + "Price: " + stock.getPrice());
         }
+    }
+
+    public void printProfile() {
+//        Customer customerAccount = logInAccount();
+        System.out.println("Account balance: " + khang.getBalance());
+        printStockPortfolios(khang);
+        printTransactions(khang);
     }
 
     private void saveCustomer() {

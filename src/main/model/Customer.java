@@ -27,6 +27,10 @@ public class Customer implements Writeable {
         this.stockPortfolios = new ArrayList<>();
     }
 
+    public void setBalance(double amount) {
+        balance = amount;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -162,7 +166,7 @@ public class Customer implements Writeable {
     public double moneyGainedFromPortfolio(int year) {
         double totalAmount = 0;
         double amountInvestAfterYears = 0;
-        for (Stock stock: stockPortfolios) {
+        for (Stock stock : stockPortfolios) {
             totalAmount += stock.getPrice() + stock.getPrice() * stock.getRate();
         }
         amountInvestAfterYears = totalAmount * year;
@@ -186,7 +190,7 @@ public class Customer implements Writeable {
     private JSONArray transactionsToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (Transaction transaction: transactions) {
+        for (Transaction transaction : transactions) {
             jsonArray.put(transaction.toJson());
         }
 
@@ -196,7 +200,7 @@ public class Customer implements Writeable {
     private JSONArray stockPortfoliosToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (Stock stock: stockPortfolios) {
+        for (Stock stock : stockPortfolios) {
             jsonArray.put(stock.toJson());
         }
         return jsonArray;

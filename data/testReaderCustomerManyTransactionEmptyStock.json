@@ -1,0 +1,19 @@
+{
+      "interest rate": 0.05,
+      "balance": 4800,
+      "name": "Khang",
+      "transactions": [
+        {
+          "price": 500,
+          "name": "deposit",
+          "type": "deposit"
+        },
+        {
+          "price": 200,
+          "name": "nike shoes",
+          "type": "consumption"
+        }
+      ],
+      "account number": 1310,
+      "stocks": []
+}

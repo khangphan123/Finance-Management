@@ -10,7 +10,7 @@ import model.Customer;
 import model.Stock;
 import model.Transaction;
 import org.json.*;
-// Reads Customer from JSON date stored in file
+// Reads Customer from JSON stored in file
 
 public class JsonReader {
     private String source;
@@ -48,6 +48,7 @@ public class JsonReader {
     //MODIFIES: cst
     //EFFECTS: parses transaction from JSON objects and
     private void addTransactions(Customer cst, JSONObject jsonObject) {
+
         JSONArray jsonArray = jsonObject.getJSONArray("transactions");
         for (Object json : jsonArray) {
             JSONObject nextTransaction = (JSONObject) json;
@@ -58,11 +59,13 @@ public class JsonReader {
     //EFFECTS: parses Transaction from JSON Object and make a purchase of the treansaciton
     //. In this case, make Purchase will add Transaction to customer.
     private void addTransaction(Customer cst, JSONObject jsonObject) {
+        double currentBalance = cst.getBalance();
         String name = jsonObject.getString("name");
         double price = jsonObject.getDouble("price");
         String type = jsonObject.getString("type");
         Transaction transaction = new Transaction(name, price, type);
         cst.makePurchase(transaction);
+        cst.setBalance(cst.getBalance() + transaction.getPrice());
     }
 
     //MODIFIES: cst
@@ -85,5 +88,7 @@ public class JsonReader {
         double type = jsonObject.getDouble("rate");
         Stock stock = new Stock(name, abbreviation, price, type);
         cst.buyStock(stock);
+        cst.setBalance(cst.getBalance() + stock.getPrice());
+
     }
 }
