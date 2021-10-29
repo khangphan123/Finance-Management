@@ -8,7 +8,7 @@ public class Transaction implements Writeable {
     private double price;
     private String type;
 
-
+    //EFFECTS: Initialize Transaction with name, price, and type;
     public Transaction(String name, double price, String type) {
         this.name = name;
         this.price = price;

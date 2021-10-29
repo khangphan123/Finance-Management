@@ -17,7 +17,7 @@ public class Customer implements Writeable {
     private double interestRate;
     private List<Stock> stockPortfolios;
 
-
+    //EFFECTS: Initialize the Customer with name Account number and initial Balance.
     public Customer(String name, int accountNumber, double initialBalance) {
         this.name = name;
         this.accountNumber = accountNumber;
@@ -26,7 +26,6 @@ public class Customer implements Writeable {
         this.interestRate = 0.05;
         this.stockPortfolios = new ArrayList<>();
     }
-
     public void setBalance(double amount) {
         balance = amount;
     }
@@ -112,7 +111,7 @@ public class Customer implements Writeable {
     // got refund. Else return False
     public boolean cancelTransaction(String name, double amount, String type) {
         for (Transaction transaction : transactions) {
-            if (transaction.getPrice() == amount && transaction.getType().equals(type)
+            if (transaction.getPrice() == amount
                     && transaction.getName().equals(name)) {
                 transactions.remove(transaction);
                 this.balance += amount;
@@ -149,9 +148,7 @@ public class Customer implements Writeable {
     // if stock is in the stock portfolios and return true. Return false otherwise
     public boolean sellStock(Stock stock) {
         for (Stock someStock : stockPortfolios) {
-            if (someStock.equals(stock) && someStock.getName() == stock.getName()
-                    && someStock.getAbbreviation() == stock.getAbbreviation()
-                    && someStock.getRate() == stock.getRate() && someStock.getRate() == stock.getRate()) {
+            if (someStock.equals(stock)) {
                 stockPortfolios.remove(someStock);
                 this.balance += stock.getPrice();
                 return true;
@@ -166,7 +163,7 @@ public class Customer implements Writeable {
     public double moneyGainedFromPortfolio(int year) {
         double totalAmount = 0;
         double amountInvestAfterYears = 0;
-        for (Stock stock : stockPortfolios) {
+        for (Stock stock: stockPortfolios) {
             totalAmount += stock.getPrice() + stock.getPrice() * stock.getRate();
         }
         amountInvestAfterYears = totalAmount * year;
@@ -190,7 +187,7 @@ public class Customer implements Writeable {
     private JSONArray transactionsToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (Transaction transaction : transactions) {
+        for (Transaction transaction: transactions) {
             jsonArray.put(transaction.toJson());
         }
 
@@ -200,7 +197,7 @@ public class Customer implements Writeable {
     private JSONArray stockPortfoliosToJson() {
         JSONArray jsonArray = new JSONArray();
 
-        for (Stock stock : stockPortfolios) {
+        for (Stock stock: stockPortfolios) {
             jsonArray.put(stock.toJson());
         }
         return jsonArray;

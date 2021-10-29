@@ -9,6 +9,7 @@ public class Stock implements Writeable {
     private double price;
     private double rate;
 
+    //EFFECTS: Initialize stock with name, abbreviation, price, and currentRate
     public Stock(String name, String abbreviation, double price, double currentRate) {
         this.name = name;
         this.abbreviation = abbreviation;

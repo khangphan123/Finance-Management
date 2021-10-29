@@ -369,6 +369,7 @@ public class FinanceApp {
         }
     }
 
+    // EFFECTS: Print out the customers profile.
     public void printProfile() {
 //        Customer customerAccount = logInAccount();
         System.out.println("Account balance: " + khang.getBalance());
@@ -376,6 +377,8 @@ public class FinanceApp {
         printTransactions(khang);
     }
 
+    // MODIFIES: this
+    //EFFECTS: Save customer to a Json File
     private void saveCustomer() {
         try {
             jsonWriter.open();
