@@ -26,6 +26,7 @@ public class Customer implements Writeable {
         this.interestRate = 0.05;
         this.stockPortfolios = new ArrayList<>();
     }
+
     public void setBalance(double amount) {
         balance = amount;
     }
