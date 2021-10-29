@@ -49,7 +49,7 @@ public class JsonWriterTest extends JsonTest {
 
 
     @Test
-    void testReaderCustomerManyTransactionEmptyStock() {
+    void testWriterCustomerManyTransactionEmptyStock() {
         try {
             Transaction transaction1 = new Transaction("nike shoes", 200, "consumption");
             Customer cst = new Customer("Khang", 1310, 4500);
