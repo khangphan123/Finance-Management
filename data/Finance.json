@@ -1,29 +1,64 @@
 {
       "interest rate": 0.05,
-      "balance": 3500,
+      "balance": 5849,
       "name": "Khang",
       "transactions": [
             {
-                  "price": 500,
-                  "name": "deposit",
-                  "type": "deposit"
-            },
-            {
                   "price": 2000,
-                  "name": "macbook pro",
-                  "type": "investment"
+                  "name": "deposit",
+                  "type": "deposit"
+            },
+            {
+                  "price": 1000,
+                  "name": "Ipad Pro ",
+                  "type": "consumption"
+            },
+            {
+                  "price": 200,
+                  "name": "Apple Pencil",
+                  "type": "Investment"
+            },
+            {
+                  "price": 220,
+                  "name": "Airpod Pro",
+                  "type": "Consumption"
             },
             {
                   "price": 500,
                   "name": "deposit",
                   "type": "deposit"
+            },
+            {
+                  "price": 500,
+                  "name": "deposit",
+                  "type": "deposit"
+            },
+            {
+                  "price": 200,
+                  "name": "Apple pen",
+                  "type": "Investment"
+            },
+            {
+                  "price": 1,
+                  "name": "Pen",
+                  "type": "consumption"
+            },
+            {
+                  "price": 10,
+                  "name": "Movie Ticket",
+                  "type": "Entertainment"
+            },
+            {
+                  "price": 20,
+                  "name": "Baseball Cap",
+                  "type": "Luxury"
             }
       ],
       "account number": 1310,
       "stocks": [{
-            "rate": 0.05,
+            "rate": 0.5,
             "price": 500,
-            "name": "tesla",
-            "abbreviation": "TSLA"
+            "name": "Apple",
+            "abbreviation": "AAPL"
       }]
 }
