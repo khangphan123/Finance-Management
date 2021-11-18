@@ -103,6 +103,7 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
 
     }
 
+    //EFFECTS: Update the user panel
     @Override
     protected void updatePanel() {
         loadCustomers();
