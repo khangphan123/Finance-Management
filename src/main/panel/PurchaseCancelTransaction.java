@@ -38,7 +38,8 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     private SeeTransactionPanel seeTransactionPanel;
 
     //EFFECTS: INITIALIZED Purchase and Cancel transaction panel.
-    public PurchaseCancelTransaction(FinanceApplication app, Customer customer, SeeTransactionPanel seeTransactionPanel) {
+    public PurchaseCancelTransaction(FinanceApplication app, Customer customer,
+                                     SeeTransactionPanel seeTransactionPanel) {
         super(app, customer);
         this.seeTransactionPanel = seeTransactionPanel;
         new GridBagLayout();
