@@ -1,4 +1,4 @@
-package panel;
+package ui.panel;
 
 import model.Customer;
 import model.Transaction;
@@ -6,14 +6,10 @@ import persistence.JsonWriter;
 import ui.FinanceApplication;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
 import java.io.FileNotFoundException;
-import java.text.NumberFormat;
 
 public class PurchaseCancelTransaction extends GeneralPanel implements ActionListener {
 
@@ -37,7 +33,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     public static final String ICONIMAGE = "./data/moneySign.png";
     private SeeTransactionPanel seeTransactionPanel;
 
-    //EFFECTS: INITIALIZED Purchase and Cancel transaction panel.
+    //EFFECTS: INITIALIZED Purchase and Cancel transaction ui.panel.
     public PurchaseCancelTransaction(FinanceApplication app, Customer customer,
                                      SeeTransactionPanel seeTransactionPanel) {
         super(app, customer);
@@ -70,7 +66,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     }
 
 
-    //EFFECTS: Initialized all the contents that will be displayed on this panel.
+    //EFFECTS: Initialized all the contents that will be displayed on this ui.panel.
     @Override
     protected void initializedContents() {
         name = new JLabel("Item name: ");
@@ -102,7 +98,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
 
     }
 
-    //EFFECTS: Add all the field label to this panel.
+    //EFFECTS: Add all the field label to this ui.panel.
     protected void addFieldLabelToPanel() {
         JLabel welcome = new JLabel("Purchasing and Cancelling transactions");
         welcome.setForeground(Color.WHITE);
@@ -129,7 +125,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
 
     }
 
-    //EFFECTS: Add all the field label to this panel.
+    //EFFECTS: Add all the field label to this ui.panel.
     protected void addFieldLabelToPanel2(GridBagConstraints constraint) {
         constraint.gridx = 0;
         constraint.gridy = 5;

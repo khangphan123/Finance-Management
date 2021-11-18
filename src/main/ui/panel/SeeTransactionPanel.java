@@ -1,4 +1,4 @@
-package panel;
+package ui.panel;
 
 import model.Customer;
 import model.Transaction;
@@ -27,7 +27,7 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
     protected JScrollPane scrollPane;
 
 
-    //EFFECTS: Initialize a panel where user can see all their previous transaction.
+    //EFFECTS: Initialize a ui.panel where user can see all their previous transaction.
     public SeeTransactionPanel(FinanceApplication app, Customer customer) {
         super(app, customer);
         this.app = app;
@@ -56,7 +56,7 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
     }
 
 
-    //EFFECTS: Display transaction onto the panel
+    //EFFECTS: Display transaction onto the ui.panel
     public void displayTransaction() {
         validate();
 //        for (Transaction transaction : purchaseTransaction) {
@@ -103,7 +103,7 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
 
     }
 
-    //EFFECTS: Update the user panel
+    //EFFECTS: Update the user ui.panel
     @Override
     protected void updatePanel() {
         loadCustomers();

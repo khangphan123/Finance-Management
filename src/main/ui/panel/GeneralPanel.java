@@ -1,4 +1,4 @@
-package panel;
+package ui.panel;
 
 import model.Customer;
 import model.Transaction;
@@ -23,7 +23,7 @@ public abstract class GeneralPanel extends JPanel implements ActionListener {
     public static final String IMAGE = "./data/bankImage.jpg";
     static final Dimension PANEL_DIMENSION = new Dimension(900, 500);
 
-    // EFFECTS: Initialized General Panel which is the parent panel of the other's panel.
+    // EFFECTS: Initialized General Panel which is the parent ui.panel of the other's ui.panel.
     public GeneralPanel(FinanceApplication app, Customer customer) {
         super(new GridBagLayout());
         setPreferredSize(PANEL_DIMENSION);
@@ -36,7 +36,7 @@ public abstract class GeneralPanel extends JPanel implements ActionListener {
     }
 
     //REQUIRES: valid graphic
-    //EFFECTS: Fill the panel with an image.
+    //EFFECTS: Fill the ui.panel with an image.
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         try {

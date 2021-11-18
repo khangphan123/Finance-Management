@@ -1,4 +1,4 @@
-package panel;
+package ui.panel;
 
 import model.Customer;
 import model.Stock;
@@ -40,7 +40,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
 
     }
 
-    //EFFECTS: Initialized all the contents that will be displayed on this panel
+    //EFFECTS: Initialized all the contents that will be displayed on this ui.panel
     @Override
     protected void initializedContents() {
         nameLabel = new JLabel("Item name: ");
@@ -67,7 +67,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
     }
 
 
-    //EFFECTS: Initialized contents for this panel.
+    //EFFECTS: Initialized contents for this ui.panel.
     protected void initializedContent2() {
         rateLabel = new JLabel("Rate: ");
         rateLabel.setForeground(Color.WHITE);
@@ -82,7 +82,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
         sell.addActionListener(this);
     }
 
-    //EFFECTS: Add all the field label to this panel
+    //EFFECTS: Add all the field label to this ui.panel
     protected void addFieldLabelToPanel() {
         JLabel welcome = new JLabel("Buying and selling stock");
         welcome.setForeground(Color.WHITE);
@@ -110,7 +110,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
     }
 
     //REQUIRES: constraint that is set out in the above method
-    //EFFECTS: Add all the field to this panel
+    //EFFECTS: Add all the field to this ui.panel
     protected void addFieldLabelToPanel2(GridBagConstraints constraint) {
         constraint.gridx = 0;
         constraint.gridy = 5;

@@ -1,11 +1,9 @@
-package panel;
+package ui.panel;
 
-import com.sun.javafx.image.impl.General;
 import model.Customer;
 import persistence.JsonReader;
 import ui.FinanceApplication;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -18,14 +16,14 @@ public class MovePanel implements ActionListener {
     public static final String JSON_STORE = "./data/Finance.json";
     private Customer customer;
 
-    //    EFFECTS: Initialized a Panel that is used for moving one panel to another.
+    //    EFFECTS: Initialized a Panel that is used for moving one ui.panel to another.
     public MovePanel(FinanceApplication app, GeneralPanel currentPanel, GeneralPanel nextPanel) {
         this.app = app;
         this.currentPanel = currentPanel;
         this.nextPanel = nextPanel;
     }
 
-    // EFFECTS: Perform necessary action to move from one panel to another.
+    // EFFECTS: Perform necessary action to move from one ui.panel to another.
     @Override
     public void actionPerformed(ActionEvent e) {
         nextPanel.updateUI();

@@ -1,4 +1,4 @@
-package panel;
+package ui.panel;
 
 import model.Customer;
 import persistence.JsonWriter;
@@ -30,7 +30,7 @@ public class DepositWithdrawPanel extends GeneralPanel {
         initializedContents();
     }
 
-    //EFFECTS: Initialized all the content on this panel
+    //EFFECTS: Initialized all the content on this ui.panel
     @Override
     protected void initializedContents() {
         welcome = new JLabel("Deposit/Withdraw");
@@ -52,7 +52,7 @@ public class DepositWithdrawPanel extends GeneralPanel {
 
     }
 
-    //EFFECTS: Add content to the panel.
+    //EFFECTS: Add content to the ui.panel.
     protected void addContentToPanel() {
         constraint.anchor = GridBagConstraints.PAGE_START;
         constraint.insets = new Insets(15, 4, 4, 4);

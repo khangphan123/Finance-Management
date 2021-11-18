@@ -1,6 +1,6 @@
 {
       "interest rate": 0.05,
-      "balance": 3595,
+      "balance": 3472,
       "name": "Khang",
       "transactions": [
             {
@@ -172,6 +172,11 @@
                   "price": 12,
                   "name": "qwd",
                   "type": "few"
+            },
+            {
+                  "price": 123,
+                  "name": "asad",
+                  "type": "wefwe"
             }
       ],
       "account number": 1310,

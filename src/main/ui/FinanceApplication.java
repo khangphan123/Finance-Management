@@ -1,8 +1,8 @@
 package ui;
 
 import model.Customer;
-import panel.PurchaseCancelTransaction;
-import panel.WelcomePanel;
+import ui.panel.PurchaseCancelTransaction;
+import ui.panel.WelcomePanel;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 

@@ -1,4 +1,4 @@
-package panel;
+package ui.panel;
 
 import model.Customer;
 import persistence.JsonReader;
@@ -98,7 +98,7 @@ public class WelcomePanel extends GeneralPanel {
     }
 
 
-    // EFFECTS: Initialized panel with button that could redirect to other panels.
+    // EFFECTS: Initialized ui.panel with button that could redirect to other panels.
     private void initalizedPanels() {
         panelList.add(purchaseCancelTransaction);
         panelList.add(buySellStockPanel);
@@ -113,14 +113,14 @@ public class WelcomePanel extends GeneralPanel {
     }
 
     //  Reference: https://github.com/blackswanblood/University_Service_Center_App
-    // EFFECTS: Initialized the homeButton which help return back to the welcome panel.
+    // EFFECTS: Initialized the homeButton which help return back to the welcome ui.panel.
     private void initializeHomeButtons() {
         for (int i = 0; i < panelList.size(); i++) {
             home.get(i).addActionListener(new MovePanel(app, panelList.get(i), this));
         }
     }
 
-    //EFFECTS: Create all the button on the panel
+    //EFFECTS: Create all the button on the ui.panel
     protected void createButton() {
         buyCancelTransaction = new JButton("Buy/cancel Transaction");
         buyCancelTransaction.setPreferredSize(new Dimension(200, 120));
@@ -149,7 +149,7 @@ public class WelcomePanel extends GeneralPanel {
 
     }
 
-    //EFFECTS: Add all the buttons to the panel.
+    //EFFECTS: Add all the buttons to the ui.panel.
     private void addButtonsToPanel(GridBagConstraints cstr) {
         cstr.gridx = 0;
         cstr.gridy = 2;
