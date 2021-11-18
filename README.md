@@ -24,7 +24,7 @@ I believe that this app will make mine and many other people's lives a lot easie
     * As a user, I want to be able to save all the amount of money, transactions, stocks that I have in my account to a file
     * As a user, I want to be able to be able to load my money, transactions, stocks from a file when I restart my application
       
-    * Phase 4:
+    * Phase 3:
     * As a user, I want to make a purchase or cancel purchase and have those transactions classes
     * to my Customer's list of Transaction. Also, those transactions must be stored in a panel where users
     * can see what is in their list of past transactions
