@@ -1,6 +1,6 @@
 {
       "interest rate": 0.05,
-      "balance": 3472,
+      "balance": 3741,
       "name": "Khang",
       "transactions": [
             {
@@ -149,24 +149,9 @@
                   "type": "consumption"
             },
             {
-                  "price": 123,
-                  "name": "r23",
-                  "type": "fwe"
-            },
-            {
-                  "price": 123,
-                  "name": "qwd",
-                  "type": "wef"
-            },
-            {
                   "price": 1,
                   "name": "few",
                   "type": "wef"
-            },
-            {
-                  "price": 1,
-                  "name": "qwd",
-                  "type": "fd"
             },
             {
                   "price": 12,
@@ -174,9 +159,14 @@
                   "type": "few"
             },
             {
-                  "price": 123,
-                  "name": "asad",
-                  "type": "wefwe"
+                  "price": 1,
+                  "name": "candy",
+                  "type": "food"
+            },
+            {
+                  "price": 100,
+                  "name": "UBC merch",
+                  "type": "clothing"
             }
       ],
       "account number": 1310,

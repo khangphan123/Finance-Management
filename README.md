@@ -22,5 +22,14 @@ I believe that this app will make mine and many other people's lives a lot easie
     * As a user, I want to be able to sell stock and remove this from my portfolios.
     * As a user, I want to see the portfolios of stock that I have bought
     * As a user, I want to be able to save all the amount of money, transactions, stocks that I have in my account to a file
-    * As a user, I want to be able to be able to load my money, transactions, stocks from a file when I restart my application.
+    * As a user, I want to be able to be able to load my money, transactions, stocks from a file when I restart my application
+    * As a user, I want to make a purchase or cancel purchase and have those transactions classes
+    * to my Customer's list of Transaction. Also, those transactions must be stored in a panel where users
+    * can see what is in their list of past transactions
+    * As a user, I want to click a button and be able to purchase transaction and add that transaction to the panel that
+    * record all the transaction.
+    * As a user, I want to click a button and be able to cancel transaction and remove that transaction from the panel that
+    * record all the transaction.
+    * As a user, I wanted to be prompted with the option of either loading my previous profile or not when launching the application.
+    * As a user, I want to be prompted with the option of either saving my application or not.
     
