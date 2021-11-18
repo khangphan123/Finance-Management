@@ -57,14 +57,14 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
 
 
     //EFFECTS: Display transaction onto the panel
-    private void displayTransaction() {
+    public void displayTransaction() {
         validate();
-        for (Transaction transaction : purchaseTransaction) {
-            customer.makePurchase(transaction);
-        }
-        for (Transaction transaction : cancelTransaction) {
-            customer.cancelTransaction(transaction.getName(), transaction.getPrice(), transaction.getType());
-        }
+//        for (Transaction transaction : purchaseTransaction) {
+//            customer.makePurchase(transaction);
+//        }
+//        for (Transaction transaction : cancelTransaction) {
+//            customer.cancelTransaction(transaction.getName(), transaction.getPrice(), transaction.getType());
+//        }
         updatePanel();
         if (customer.getTransaction().size() == 0) {
             String empty = "There are no transaction";
@@ -107,6 +107,10 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
     @Override
     protected void updatePanel() {
         loadCustomers();
+        repaint();
+        revalidate();
+        System.out.println(customer.getTransaction());
+
     }
 
     @Override

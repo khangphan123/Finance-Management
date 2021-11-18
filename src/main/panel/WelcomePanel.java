@@ -46,10 +46,11 @@ public class WelcomePanel extends GeneralPanel {
         Image image = imageIcon.getImage(); // transform it
         Image newImage = image.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         icon1 = new ImageIcon(newImage);  // transform it back
-        purchaseCancelTransaction = new PurchaseCancelTransaction(app, customer);
+        seeTransactionPanel = new SeeTransactionPanel(app, customer);
+        purchaseCancelTransaction = new PurchaseCancelTransaction(app, customer, seeTransactionPanel);
         buySellStockPanel = new BuySellStockPanel(app, customer);
         depositWithdrawPanel = new DepositWithdrawPanel(app, customer);
-        seeTransactionPanel = new SeeTransactionPanel(app, customer);
+
         constraint = new GridBagConstraints();
         if (shouldFill) {
             //natural height, maximum width

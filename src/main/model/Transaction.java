@@ -36,4 +36,8 @@ public class Transaction implements Writeable {
         json.put("type", type);
         return json;
     }
+
+    public String toString() {
+        return this.name + " " + this.price + " " + this.type;
+    }
 }

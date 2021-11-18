@@ -35,10 +35,12 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     private Boolean shouldFill = true;
     protected ImageIcon icon1;
     public static final String ICONIMAGE = "./data/moneySign.png";
+    private SeeTransactionPanel seeTransactionPanel;
 
     //EFFECTS: INITIALIZED Purchase and Cancel transaction panel.
-    public PurchaseCancelTransaction(FinanceApplication app, Customer customer) {
+    public PurchaseCancelTransaction(FinanceApplication app, Customer customer, SeeTransactionPanel seeTransactionPanel) {
         super(app, customer);
+        this.seeTransactionPanel = seeTransactionPanel;
         new GridBagLayout();
         initializedContents();
 //        welcomePanel = new WelcomePanel(app,customer);
@@ -190,6 +192,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
         }
         validate();
         saveCustomers();
+        seeTransactionPanel.displayTransaction();
     }
 
     //EFFECTS: save customer

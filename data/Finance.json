@@ -1,6 +1,6 @@
 {
       "interest rate": 0.05,
-      "balance": 3855,
+      "balance": 3595,
       "name": "Khang",
       "transactions": [
             {
@@ -147,6 +147,31 @@
                   "price": 20,
                   "name": "charger",
                   "type": "consumption"
+            },
+            {
+                  "price": 123,
+                  "name": "r23",
+                  "type": "fwe"
+            },
+            {
+                  "price": 123,
+                  "name": "qwd",
+                  "type": "wef"
+            },
+            {
+                  "price": 1,
+                  "name": "few",
+                  "type": "wef"
+            },
+            {
+                  "price": 1,
+                  "name": "qwd",
+                  "type": "fd"
+            },
+            {
+                  "price": 12,
+                  "name": "qwd",
+                  "type": "few"
             }
       ],
       "account number": 1310,

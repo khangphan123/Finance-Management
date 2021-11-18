@@ -204,4 +204,6 @@ public class Customer implements Writeable {
         return jsonArray;
     }
 
+
+
 }
