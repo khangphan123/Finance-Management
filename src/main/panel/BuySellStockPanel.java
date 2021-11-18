@@ -138,6 +138,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
     public void buyStock(String name, String abbreviation, double price, double rate) {
         Stock newStock = new Stock(name, abbreviation, price, rate);
         customer.buyStock(newStock);
+        saveCustomers();
         JOptionPane.showMessageDialog(this, "Buy stock successfully");
 
     }
@@ -147,6 +148,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
     public void sellStock(String name, String abbreviation, double price, double rate) {
         Stock newStock = new Stock(name, abbreviation, price, rate);
         customer.sellStock(newStock);
+        saveCustomers();
         JOptionPane.showMessageDialog(this, "Sell stock successfully");
 
     }
@@ -167,6 +169,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
             priced = priceDouble;
             rated = rateDouble;
         } catch (NumberFormatException ex) {
+            ex.printStackTrace();
         }
         if (e.getSource() == buy) {
             if (customer.getBalance() < priced) {
@@ -177,7 +180,6 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
         } else if (e.getSource() == sell) {
             sellStock(named, abbreviationed, priced, rated);
         }
-        saveCustomers();
     }
 
     //EFFECTS: save customer.
