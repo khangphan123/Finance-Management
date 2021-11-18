@@ -29,8 +29,8 @@ public class FinanceApplication extends JFrame {
         setSize(frameDimension);
 //        Object[] options = {yes, no};
         randomCustomer = new Customer("No one", 123, 50000);
-        int options = JOptionPane.showOptionDialog(FinanceApplication.this, "Do you want to load your profile", "Option",
-                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+        int options = JOptionPane.showOptionDialog(FinanceApplication.this, "Do you want to load your profile",
+                "Option", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
         if (options == JOptionPane.YES_OPTION) {
             loadCustomers();
         } else {
