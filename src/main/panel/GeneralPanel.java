@@ -1,6 +1,7 @@
 package panel;
 
 import model.Customer;
+import model.Transaction;
 import ui.FinanceApplication;
 
 import javax.imageio.ImageIO;
@@ -17,18 +18,21 @@ public abstract class GeneralPanel extends JPanel implements ActionListener {
     private FinanceApplication app;
     private Customer customer;
     protected List<GeneralPanel> panelList;
+    protected List<Transaction> purchaseTransaction;
+    protected List<Transaction> cancelTransaction;
     public static final String IMAGE = "./data/bankImage.jpg";
-    static final Dimension PANEL_DIMENSION = new Dimension(900,500);
+    static final Dimension PANEL_DIMENSION = new Dimension(900, 500);
+
     // EFFECTS: Initialized General Panel which is the parent panel of the other's panel.
     public GeneralPanel(FinanceApplication app, Customer customer) {
         super(new GridBagLayout());
         setPreferredSize(PANEL_DIMENSION);
-//        setAlignmentX(Component.RIGHT_ALIGNMENT);
-//        setAlignmentY(Component.TOP_ALIGNMENT);
         setVisible(true);
         this.customer = customer;
         this.app = app;
         panelList = new ArrayList<>();
+        purchaseTransaction = new ArrayList<>();
+        cancelTransaction = new ArrayList<>();
     }
 
     //REQUIRES: valid graphic
@@ -44,6 +48,8 @@ public abstract class GeneralPanel extends JPanel implements ActionListener {
     }
 
     protected abstract void initializedContents();
+
+    protected abstract void updatePanel();
 }
 
 

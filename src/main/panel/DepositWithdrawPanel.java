@@ -47,6 +47,11 @@ public class DepositWithdrawPanel extends GeneralPanel {
 
     }
 
+    @Override
+    protected void updatePanel() {
+
+    }
+
     //EFFECTS: Add content to the panel.
     protected void addContentToPanel() {
         constraint.anchor = GridBagConstraints.PAGE_START;

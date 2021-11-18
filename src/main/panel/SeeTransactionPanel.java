@@ -15,6 +15,7 @@ import java.util.List;
 
 public class SeeTransactionPanel extends GeneralPanel implements ActionListener {
     private Customer customer;
+    private Customer customerRealData;
     private FinanceApplication app;
     private List<JLabel> labels;
     private GridBagConstraints constraint;
@@ -34,7 +35,7 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
         labels = new ArrayList<>();
         toolBar = new JToolBar("Dragging transactions");
         add(toolBar);
-        textArea = new JTextArea(20,75);
+        textArea = new JTextArea(20, 75);
         textArea.setEditable(false);
         scrollPane = new JScrollPane(textArea);
         add(toolBar);
@@ -47,18 +48,24 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
             //natural height, maximum width
             constraint.fill = GridBagConstraints.HORIZONTAL;
         }
+        validate();
         displayTransaction();
         add(scrollPane);
-
 
 
     }
 
 
-
     //EFFECTS: Display transaction onto the panel
     private void displayTransaction() {
-        loadCustomers();
+        validate();
+        for (Transaction transaction : purchaseTransaction) {
+            customer.makePurchase(transaction);
+        }
+        for (Transaction transaction : cancelTransaction) {
+            customer.cancelTransaction(transaction.getName(), transaction.getPrice(), transaction.getType());
+        }
+        updatePanel();
         if (customer.getTransaction().size() == 0) {
             String empty = "There are no transaction";
             textArea.append(empty);
@@ -97,6 +104,11 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
     }
 
     @Override
+    protected void updatePanel() {
+        loadCustomers();
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
 
     }
@@ -104,7 +116,6 @@ public class SeeTransactionPanel extends GeneralPanel implements ActionListener 
 
     //EFFECTS: Load Customers.
     public void loadCustomers() {
-
         try {
             JsonReader jsonReader = new JsonReader(JSON_STORE);
             customer = jsonReader.read();

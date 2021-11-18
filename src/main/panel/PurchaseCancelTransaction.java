@@ -29,7 +29,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     private JButton cancel;
     private FinanceApplication app;
     protected Customer customer;
-//    protected WelcomePanel welcomePanel;
+    //    protected WelcomePanel welcomePanel;
     public static final String JSON_STORE = "./data/Finance.json";
     private GridBagConstraints constraint;
     private Boolean shouldFill = true;
@@ -62,7 +62,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     private void initializedIcon() {
         ImageIcon imageIcon = new ImageIcon(ICONIMAGE);
         Image image = imageIcon.getImage();
-        Image newImage = image.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH);
+        Image newImage = image.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
         icon1 = new ImageIcon(newImage);
     }
 
@@ -72,7 +72,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     protected void initializedContents() {
         name = new JLabel("Item name: ");
         name.setForeground(Color.WHITE);
-        name.setPreferredSize(new Dimension(100,25));
+        name.setPreferredSize(new Dimension(100, 25));
         itemName = new JTextField();
         itemName.setPreferredSize(new Dimension(100, 25));
         priceLabel = new JLabel("Price: ");
@@ -81,7 +81,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
         price.setPreferredSize(new Dimension(100, 25));
         typeLabel = new JLabel("Type: ");
         typeLabel.setForeground(Color.WHITE);
-        typeLabel.setPreferredSize(new Dimension(100,25));
+        typeLabel.setPreferredSize(new Dimension(100, 25));
         type = new JTextField();
         type.setPreferredSize(new Dimension(100, 25));
         purchase = new JButton("purchase");
@@ -94,28 +94,33 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
 
     }
 
+    @Override
+    protected void updatePanel() {
+
+    }
+
     //EFFECTS: Add all the field label to this panel.
     protected void addFieldLabelToPanel() {
         JLabel welcome = new JLabel("Purchasing and Cancelling transactions");
         welcome.setForeground(Color.WHITE);
         constraint.anchor = GridBagConstraints.PAGE_START;
-        constraint.insets = new Insets(15,4,4,4);
+        constraint.insets = new Insets(15, 4, 4, 4);
         constraint.gridx = 0;
         constraint.gridy = 0;
-        add(welcome,constraint);
+        add(welcome, constraint);
         constraint.anchor = GridBagConstraints.LINE_START;
         constraint.gridx = 0;
         constraint.gridy = 1;
-        add(name,constraint);
+        add(name, constraint);
         constraint.gridx = 0;
         constraint.gridy = 2;
-        add(itemName,constraint);
+        add(itemName, constraint);
         constraint.gridx = 0;
         constraint.gridy = 3;
-        add(priceLabel,constraint);
+        add(priceLabel, constraint);
         constraint.gridx = 0;
         constraint.gridy = 4;
-        add(price,constraint);
+        add(price, constraint);
 
         addFieldLabelToPanel2(constraint);
 
@@ -125,16 +130,16 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     protected void addFieldLabelToPanel2(GridBagConstraints constraint) {
         constraint.gridx = 0;
         constraint.gridy = 5;
-        add(typeLabel,constraint);
+        add(typeLabel, constraint);
         constraint.gridx = 0;
         constraint.gridy = 6;
-        add(type,constraint);
+        add(type, constraint);
         constraint.gridx = 0;
         constraint.gridy = 7;
-        add(purchase,constraint);
+        add(purchase, constraint);
         constraint.gridx = 0;
         constraint.gridy = 8;
-        add(cancel,constraint);
+        add(cancel, constraint);
         constraint.gridx = 1;
         constraint.gridy = 8;
 
@@ -144,6 +149,7 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     //EFFECTS: Purchase the transaction with given name, price, and types
     protected void purchaseItem(String name, int priced, String types) {
         Transaction transaction = new Transaction(name, priced, types);
+        purchaseTransaction.add(transaction);
         customer.makePurchase(transaction);
         JOptionPane.showMessageDialog(this, "Purchased Sucessfully", "message", JOptionPane.INFORMATION_MESSAGE, icon1);
     }
@@ -151,13 +157,15 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
     //REQUIRES: valid name, valid price, valid types
     //EFFECTS: Cancel the transaction with given name, price, and types.
     protected void cancelItem(String name, int priced, String types) {
+        Transaction transaction = new Transaction(name, priced, types);
+        cancelTransaction.add(transaction);
         customer.cancelTransaction(name, priced, types);
         JOptionPane.showMessageDialog(this, "Cancelled Sucessfully", "message", JOptionPane.INFORMATION_MESSAGE, icon1);
 
     }
 
-     //REQUIRES: valid action event
-     //EFFECTS: perform necessary action when button is clicked.
+    //REQUIRES: valid action event
+    //EFFECTS: perform necessary action when button is clicked.
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -178,8 +186,9 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
                 purchaseItem(name, newPrice, types);
             }
         } else if (e.getSource() == cancel) {
-            cancelItem(name,newPrice,types);
+            cancelItem(name, newPrice, types);
         }
+        validate();
         saveCustomers();
     }
 
@@ -195,7 +204,6 @@ public class PurchaseCancelTransaction extends GeneralPanel implements ActionLis
         }
 
     }
-
 
 
 }

@@ -20,7 +20,7 @@ public class WelcomePanel extends GeneralPanel {
     protected JButton depositWithdraw;
     protected JButton save;
     protected JButton load;
-    protected Customer randomCustomer;
+    protected Customer realCustomer;
     protected JButton seeTransaction;
     private FinanceApplication app;
     private Customer customer;
@@ -44,9 +44,8 @@ public class WelcomePanel extends GeneralPanel {
         this.home = new ArrayList<>();
         ImageIcon imageIcon = new ImageIcon(ICONIMAGE);
         Image image = imageIcon.getImage(); // transform it
-        Image newImage = image.getScaledInstance(40, 40,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        Image newImage = image.getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
         icon1 = new ImageIcon(newImage);  // transform it back
-
         purchaseCancelTransaction = new PurchaseCancelTransaction(app, customer);
         buySellStockPanel = new BuySellStockPanel(app, customer);
         depositWithdrawPanel = new DepositWithdrawPanel(app, customer);
@@ -56,12 +55,13 @@ public class WelcomePanel extends GeneralPanel {
             //natural height, maximum width
             constraint.fill = GridBagConstraints.HORIZONTAL;
         }
-        initializedContents();
-        initializedCustomer(customer);
         setSize(new Dimension(400, 500));
         setAlignmentX(Component.RIGHT_ALIGNMENT);
         setAlignmentY(Component.TOP_ALIGNMENT);
         setVisible(true);
+        initializedContents();
+        initializedCustomer(customer);
+
     }
 
     //EFFECTS: Initialized all the contents that will be displayed on the panels.
@@ -70,6 +70,11 @@ public class WelcomePanel extends GeneralPanel {
         initalizedPanels();
         initializeHomeButtons();
         createButton();
+    }
+
+    @Override
+    protected void updatePanel() {
+
     }
 
 
@@ -90,36 +95,30 @@ public class WelcomePanel extends GeneralPanel {
         addButtonsToPanel(constraint);
 
     }
-    //  Reference: https://github.com/blackswanblood/University_Service_Center_App
+
+
     // EFFECTS: Initialized panel with button that could redirect to other panels.
     private void initalizedPanels() {
-        panelList.add(new PurchaseCancelTransaction(app, customer));
-        panelList.add(new BuySellStockPanel(app, customer));
-        panelList.add(new DepositWithdrawPanel(app, customer));
-        panelList.add(new SeeTransactionPanel(app,customer));
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.PAGE_END;
-        gbc.insets = new Insets(0,2,5,10);
-        gbc.gridx = 4;
-        gbc.gridy = 8;
-
-        for (GeneralPanel p: panelList) {
-            JButton back = new JButton("Back");
-            home.add(back);
-            p.add(back);
+        panelList.add(purchaseCancelTransaction);
+        panelList.add(buySellStockPanel);
+        panelList.add(depositWithdrawPanel);
+        panelList.add(seeTransactionPanel);
+        //  Reference: https://github.com/blackswanblood/University_Service_Center_App
+        for (GeneralPanel p : panelList) {
+            JButton returns = new JButton("Return");
+            home.add(returns);
+            p.add(returns);
         }
     }
 
     //  Reference: https://github.com/blackswanblood/University_Service_Center_App
     // EFFECTS: Initialized the homeButton which help return back to the welcome panel.
-
     private void initializeHomeButtons() {
         for (int i = 0; i < panelList.size(); i++) {
             home.get(i).addActionListener(new MovePanel(app, panelList.get(i), this));
         }
     }
+
     //EFFECTS: Create all the button on the panel
     protected void createButton() {
         buyCancelTransaction = new JButton("Buy/cancel Transaction");
@@ -129,23 +128,22 @@ public class WelcomePanel extends GeneralPanel {
         save = new JButton(("Save"));
         save.setPreferredSize(new Dimension(150, 150));
         load = new JButton("Load");
-        load.setPreferredSize(new Dimension(150,150));
+        load.setPreferredSize(new Dimension(150, 150));
         seeTransaction = new JButton("See Transaction");
-        seeTransaction.setPreferredSize(new Dimension(150,150));
+        seeTransaction.setPreferredSize(new Dimension(150, 150));
         initializedButtonInteraction();
     }
 
-    //Reference: https://github.com/blackswanblood/University_Service_Center_App
+
     //EFFECTS: Initialized the interaction that occurs when the button is clicked
     protected void initializedButtonInteraction() {
+        save.addActionListener(this);
+        load.addActionListener(this);
+        //Reference: https://github.com/blackswanblood/University_Service_Center_App
         buyCancelTransaction.addActionListener(new MovePanel(app, this, this.panelList.get(0)));
         buySellStock.addActionListener(new MovePanel(app, this, this.panelList.get(1)));
         depositWithdraw.addActionListener(new MovePanel(app, this, this.panelList.get(2)));
-        save.addActionListener(this);
-        load.addActionListener(this);
         seeTransaction.addActionListener(new MovePanel(app, this, this.panelList.get(3)));
-
-
 
 
     }
@@ -175,7 +173,6 @@ public class WelcomePanel extends GeneralPanel {
     }
 
 
-
     //EFFECTS: Save customer.
     public void saveCustomers() {
         try {
@@ -183,13 +180,14 @@ public class WelcomePanel extends GeneralPanel {
             writer.open();
             writer.write(customer);
             writer.close();
-            JOptionPane.showMessageDialog(this,"Save successfully", "message", JOptionPane.INFORMATION_MESSAGE, icon1);
+            JOptionPane.showMessageDialog(this, "Save successfully", "message", JOptionPane.INFORMATION_MESSAGE, icon1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
 
     }
+
     //EFFECTS: Load Customer.
     public void loadCustomers() {
         try {
@@ -201,6 +199,7 @@ public class WelcomePanel extends GeneralPanel {
         }
 
     }
+
 
     //EFFECTS: Perform necessary action when button is clicked.
     @Override

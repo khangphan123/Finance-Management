@@ -61,6 +61,11 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
         addFieldLabelToPanel();
     }
 
+    @Override
+    protected void updatePanel() {
+
+    }
+
 
     //EFFECTS: Initialized contents for this panel.
     protected void initializedContent2() {
@@ -103,6 +108,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
         addFieldLabelToPanel2(constraint);
 
     }
+
     //REQUIRES: constraint that is set out in the above method
     //EFFECTS: Add all the field to this panel
     protected void addFieldLabelToPanel2(GridBagConstraints constraint) {
@@ -126,6 +132,7 @@ public class BuySellStockPanel extends GeneralPanel implements ActionListener {
         add(sell, constraint);
 
     }
+
     //REQUIRES: valid name, valid price, valid abbreviation, valid rate.
     //EFFECTS: Perform buying Stock
     public void buyStock(String name, String abbreviation, double price, double rate) {

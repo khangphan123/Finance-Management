@@ -8,12 +8,10 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
 
 public class FinanceApplication extends JFrame {
     public static final String JSON_STORE = "./data/Finance.json";
@@ -25,49 +23,29 @@ public class FinanceApplication extends JFrame {
     JButton yes;
     JButton no;
 
-
+    //EFFECTS: Run the application
     public FinanceApplication() {
         super("Finance");
         setSize(frameDimension);
-        initializeButton();
 //        Object[] options = {yes, no};
         randomCustomer = new Customer("No one", 123, 50000);
-//        JOptionPane.showOptionDialog(FinanceApplication.this,"Do you want to load your profile","Option",
-//        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-//                null, options, options);
-
-
-        loadCustomers();
+        int options = JOptionPane.showOptionDialog(FinanceApplication.this, "Do you want to load your profile", "Option",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+        if (options == JOptionPane.YES_OPTION) {
+            loadCustomers();
+        } else {
+            customer = randomCustomer;
+        }
         welcomePanel = new WelcomePanel(this, customer);
         add(welcomePanel);
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
         setResizable(false);
+        addWindowListener(new SavingPopUp());
     }
 
-    public void initializeButton() {
-        yes = new JButton("Yes");
-        no = new JButton("No");
-        yes.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                loadCustomers();
-                welcomePanel = new WelcomePanel(FinanceApplication.this, customer);
-
-            }
-        });
-        no.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                welcomePanel = new WelcomePanel(FinanceApplication.this, randomCustomer);
-            }
-        });
-
-    }
-
-
-
+    //EFFECTS: Load Customers.
     public void loadCustomers() {
 
         try {
@@ -79,15 +57,30 @@ public class FinanceApplication extends JFrame {
 
     }
 
+    //EFFECTS: Pop up a window to indicate whether or not user want to save the data.
+    private class SavingPopUp extends WindowAdapter {
+        public void windowClosing(WindowEvent e) {
+            int option = JOptionPane.showOptionDialog(
+                    FinanceApplication.this,
+                    "Do you want to save your profile? ",
+                    "saving message", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+                    null, null, null);
+            if (option == JOptionPane.YES_OPTION) {
+                saveCustomers();
+            }
+            System.exit(0);
+        }
+    }
 
 
+    //EFFECTS: Save customer.
     public void saveCustomers() {
         try {
             JsonWriter writer = new JsonWriter(JSON_STORE);
             writer.open();
             writer.write(customer);
             writer.close();
-            JOptionPane.showMessageDialog(FinanceApplication.this,"Save successfully");
+            JOptionPane.showMessageDialog(FinanceApplication.this, "Save successfully");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
