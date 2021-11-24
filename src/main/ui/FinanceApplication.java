@@ -1,13 +1,16 @@
 package ui;
 
+import exception.LogException;
 import model.Customer;
-import ui.panel.PurchaseCancelTransaction;
-import ui.panel.WelcomePanel;
+import model.Event;
+import model.EventLog;
+import ui.panel.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
@@ -20,8 +23,12 @@ public class FinanceApplication extends JFrame {
     Customer customer;
     WelcomePanel welcomePanel;
     PurchaseCancelTransaction purchaseCancelTransactionPanel;
+    private static final String FILE_DESCRIPTOR = "...file";
+    private static final String SCREEN_DESCRIPTOR = "...screen";
     JButton yes;
     JButton no;
+    private JComboBox<String> printCombo;
+
 
     //EFFECTS: Run the application
     public FinanceApplication() {
@@ -65,6 +72,11 @@ public class FinanceApplication extends JFrame {
             if (option == JOptionPane.YES_OPTION) {
                 saveCustomers();
             }
+            EventLog log = EventLog.getInstance();
+            for (Event event: log) {
+                System.out.println(event.getDescription() + " " + event.getDate());
+            }
+
             System.exit(0);
         }
     }
@@ -82,5 +94,30 @@ public class FinanceApplication extends JFrame {
             e.printStackTrace();
         }
 
+    }
+
+    private class PrintLogAction extends AbstractAction {
+        PrintLogAction() {
+            super("Print log to...");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            String selected = (String) printCombo.getSelectedItem();
+            LogPrinter lp;
+            try {
+                if (selected.equals(FILE_DESCRIPTOR)) {
+                    lp = new FilePrinter();
+                } else {
+                    lp = new ScreenPrinter(FinanceApplication.this);
+                    FinanceApplication.this.add((ScreenPrinter) lp);
+                }
+
+                lp.printLog(EventLog.getInstance());
+            } catch (LogException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }

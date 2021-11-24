@@ -98,6 +98,7 @@ public class Customer implements Writeable {
     public boolean makePurchase(Transaction transaction) {
         if (transaction.getPrice() <= this.balance) {
             this.balance -= transaction.getPrice();
+            EventLog.getInstance().logEvent(new Event("Added new transaction " + transaction.getName()));
             this.transactions.add(transaction);
             return true;
         } else {
@@ -114,6 +115,7 @@ public class Customer implements Writeable {
         for (Transaction transaction : transactions) {
             if (transaction.getPrice() == amount
                     && transaction.getName().equals(name)) {
+                EventLog.getInstance().logEvent(new Event("Canceled transaction " + transaction.getName()));
                 transactions.remove(transaction);
                 this.balance += amount;
                 return true;

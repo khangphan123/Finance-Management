@@ -35,3 +35,7 @@ I believe that this app will make mine and many other people's lives a lot easie
     * As a user, I wanted to be prompted with the option of either loading my previous profile or not when launching the application.
     * As a user, I want to be prompted with the option of either saving my application or not.
     
+    *Phase 4: Task 2
+    Sample logging event:
+    "Wed Nov 24 11:12:48 PST 2021
+    Added new transaction iphone 13"

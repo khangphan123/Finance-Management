@@ -1,6 +1,8 @@
 package ui.panel;
 
+import exception.LogException;
 import model.Customer;
+import model.EventLog;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.FinanceApplication;
@@ -8,8 +10,11 @@ import ui.FinanceApplication;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.rmi.Remote;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +25,13 @@ public class WelcomePanel extends GeneralPanel {
     protected JButton depositWithdraw;
     protected JButton save;
     protected JButton load;
-    protected Customer realCustomer;
+    private JComboBox<String> printCombo;
+    private static final String FILE_DESCRIPTOR = "...file";
+    private static final String SCREEN_DESCRIPTOR = "...screen";
+    protected JButton printLog;
     protected JButton seeTransaction;
     private FinanceApplication app;
+    private JDesktopPane desktop;
     private Customer customer;
     private PurchaseCancelTransaction purchaseCancelTransaction;
     private BuySellStockPanel buySellStockPanel;
@@ -53,12 +62,9 @@ public class WelcomePanel extends GeneralPanel {
 
         constraint = new GridBagConstraints();
         if (shouldFill) {
-            //natural height, maximum width
             constraint.fill = GridBagConstraints.HORIZONTAL;
         }
         setSize(new Dimension(400, 500));
-        setAlignmentX(Component.RIGHT_ALIGNMENT);
-        setAlignmentY(Component.TOP_ALIGNMENT);
         setVisible(true);
         initializedContents();
         initializedCustomer(customer);
@@ -132,6 +138,8 @@ public class WelcomePanel extends GeneralPanel {
         load.setPreferredSize(new Dimension(150, 150));
         seeTransaction = new JButton("See Transaction");
         seeTransaction.setPreferredSize(new Dimension(150, 150));
+        printLog = new JButton("Print log");
+        printLog.setPreferredSize(new Dimension(150, 150));
         initializedButtonInteraction();
     }
 
@@ -145,6 +153,7 @@ public class WelcomePanel extends GeneralPanel {
         buySellStock.addActionListener(new MovePanel(app, this, this.panelList.get(1)));
         depositWithdraw.addActionListener(new MovePanel(app, this, this.panelList.get(2)));
         seeTransaction.addActionListener(new MovePanel(app, this, this.panelList.get(3)));
+        printLog.addActionListener(new PrintLogAction());
 
 
     }
@@ -166,11 +175,23 @@ public class WelcomePanel extends GeneralPanel {
         cstr.gridx = 0;
         cstr.gridy = 6;
         add(load, cstr);
+        addButtonsToPanel2(cstr);
+
+    }
+
+    private void addButtonsToPanel2(GridBagConstraints cstr) {
         cstr.gridx = 0;
         cstr.gridy = 7;
         add(seeTransaction, cstr);
+        cstr.gridx = 0;
+        cstr.gridy = 8;
+        add(printLog, cstr);
+        cstr.gridx = 1;
+        cstr.gridy = 8;
+        add(createPrintCombo(), cstr);
         cstr.anchor = GridBagConstraints.LAST_LINE_START;
         cstr.insets = new Insets(50, 4, 4, 4);
+
     }
 
 
@@ -201,6 +222,13 @@ public class WelcomePanel extends GeneralPanel {
 
     }
 
+    private JComboBox<String> createPrintCombo() {
+        printCombo = new JComboBox<String>();
+        printCombo.addItem(FILE_DESCRIPTOR);
+        printCombo.addItem(SCREEN_DESCRIPTOR);
+        return printCombo;
+    }
+
 
     //EFFECTS: Perform necessary action when button is clicked.
     @Override
@@ -210,6 +238,32 @@ public class WelcomePanel extends GeneralPanel {
         } else if (e.getSource() == load) {
             loadCustomers();
         }
-
     }
+
+    private class PrintLogAction extends AbstractAction {
+        PrintLogAction() {
+            super("Print log to...");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            String selected = (String) printCombo.getSelectedItem();
+            LogPrinter lp;
+            try {
+                if (selected.equals(FILE_DESCRIPTOR)) {
+                    lp = new FilePrinter();
+                } else {
+                    lp = new ScreenPrinter(app);
+                    app.add((ScreenPrinter) lp);
+                }
+
+                lp.printLog(EventLog.getInstance());
+            } catch (LogException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+
 }
