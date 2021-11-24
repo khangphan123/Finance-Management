@@ -64,7 +64,7 @@ public class FinanceApplication extends JFrame {
 
     }
 
-    //EFFECTS: Pop up a window to indicate whether or not user want to save the data.
+    //EFFECTS: Pop up a window to indicate whether or not user want to save the data
     private class SavingPopUp extends WindowAdapter {
         public void windowClosing(WindowEvent e) {
             int option = JOptionPane.showOptionDialog(FinanceApplication.this, "Do you want to save your profile? ",
