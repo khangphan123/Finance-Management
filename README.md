@@ -44,3 +44,4 @@ I believe that this app will make mine and many other people's lives a lot easie
     - I would use more principle design pattern to improve cohesion of my code.
     - I would use the customer and app field that is declared in the abstract general panel instead of declaring customer 
     and app all over the place in each of the panels.
+      - I would 
