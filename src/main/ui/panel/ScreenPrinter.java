@@ -39,7 +39,7 @@ public class ScreenPrinter extends JInternalFrame implements LogPrinter {
     /**
      * Sets the position of window in which log will be printed relative to
      * parent
-     * @param parent  the parent component
+     * @param parent  the parent component.
      */
     private void setPosition(Component parent) {
         setLocation(parent.getWidth() - getWidth() - 20,
