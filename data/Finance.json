@@ -1,12 +1,19 @@
 {
       "interest rate": 0.05,
-      "balance": 46449,
+      "balance": 46448,
       "name": "Khang",
-      "transactions": [{
-            "price": 1000,
-            "name": "iphone 13",
-            "type": "entertainment"
-      }],
+      "transactions": [
+            {
+                  "price": 1000,
+                  "name": "iphone 13",
+                  "type": "entertainment"
+            },
+            {
+                  "price": 1,
+                  "name": "wdf",
+                  "type": "f"
+            }
+      ],
       "account number": 123,
       "stocks": []
 }

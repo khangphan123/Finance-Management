@@ -48,7 +48,7 @@ public class FinanceApplication extends JFrame {
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
         addWindowListener(new SavingPopUp());
     }
 

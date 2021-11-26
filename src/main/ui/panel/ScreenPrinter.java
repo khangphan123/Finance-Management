@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ScreenPrinter extends JInternalFrame implements LogPrinter {
-    private static final int WIDTH = 100;
-    private static final int HEIGHT = 100;
+    private static final int WIDTH = 50;
+    private static final int HEIGHT = 50;
     private JTextArea logArea;
 
     /**
